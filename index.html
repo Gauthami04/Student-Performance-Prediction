@@ -1,143 +1,89 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>STUDYSPECTRUM | Student Performance System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/ML Student Performance Predictor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-    <!-- EXTERNAL CSS -->
-    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <div class="container">
+ <header>
+   <img src="assets/logo.png" alt="StudySpectrum Logo" class="logo">
 
-<!-- ================= SIDEBAR ================= -->
-<div class="sidebar">
+    <h1>STUDYSPECTRUM</h1>
+    <p>Welcome, Teachers! Your intelligent partner in modern classroom evaluation.</p>
+    <div class="badge">Machine Learning | Logistic Regression</div>
+</header>
 
-    <!-- LOGO + SITE NAME -->
-    <div class="sidebar-header" onclick="showSection('home')" style="cursor:pointer;">
-        <img src="images/logo.png" class="logo" alt="Logo">
-        <span class="site-name">STUDYSPECTRUM</span>
-    </div>
-
-    <!-- MENU -->
-    <a href="#" onclick="showSection('dashboard')">Dashboard</a>
-    <a href="#" onclick="showSection('students')">Students</a>
-    <a href="#" onclick="showSection('performance')">Performance</a>
-    <a href="#" onclick="showSection('settings')">Settings</a>
-</div>
-
-<!-- ================= MAIN CONTENT ================= -->
-<div class="main">
-
-    <!-- ========== HOME PAGE (FIRST PAGE) ========== -->
-    <section id="home" class="section active">
-        <div class="welcome-card">
-            <img src="images/logo.png" class="home-logo" alt="StudySpectrum Logo">
-
-            <h1 class="home-site-name">STUDYSPECTRUM</h1>
-
-            <p class="description"><br></br>
-               <center>Welcome to StudySpectrum </center> 
-                a professional platform designed
-                for teachers to efficiently manage student academic data.
-                Record attendance, upload internal marks, track assignments,
-                and analyze overall student performance with ease.
-                <br></br>
-            </p>
-        </div>
-
-        <!-- FOOTER -->
-        <footer style="text-align:center; margin-top:60px; color:#9ca3af;">
-            © 2026 StudySpectrum | Academic Performance Management System
-        </footer>
-    </section>
-
-    <!-- ========== DASHBOARD ========== -->
-    <section id="dashboard" class="section">
-        <h1 class="section-title">Enter Student Details</h1>
-
-        <div class="dashboard-wrapper">
-            <div class="form">
-                <input type="text" placeholder="Student ID">
-                <input type="number" placeholder="Attendance (%)">
-                <input type="number" placeholder="Internal Test 1 (%)">
-                <input type="number" placeholder="Internal Test 2 (%)">
-                <input type="number" placeholder="Assignment (%)">
-                <input type="number" placeholder="Study Hours / Day">
-                <button>Save Student Data</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== STUDENTS ========== -->
-    <section id="students" class="section">
-        <h1 class="section-title">Student Records</h1>
-
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Attendance</th>
-                        <th>Int 1</th>
-                        <th>Int 2</th>
-                        <th>Assignment</th>
-                        <th>Study Hours</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="6" class="empty-row">
-                            No student data available
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- ========== PERFORMANCE ========== -->
-    <section id="performance" class="section">
-        <h1 class="section-title">Performance Analysis</h1>
-
-        <div class="performance-wrapper">
+        <div class="main-content">
             <div class="card">
-                <div class="card-title">Overall Performance</div>
-                <span id="score">--%</span><br>
-                <span id="label">Waiting for student data</span>
+                <h2> Enter Student Data</h2>
+                <div class="form">
+                    <div class="input-group">
+                        <label>Student ID:</label>
+                        <input type="text" id="studentId" placeholder="e.g., STU001">
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Internal Test 1 (0-40):</label>
+                            <input type="number" id="test1" min="0" max="40">
+                        </div>
+                        <div class="input-group">
+                            <label>Internal Test 2 (0-40):</label>
+                            <input type="number" id="test2" min="0" max="40">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Assignment Score (0-10):</label>
+                        <input type="number" id="assignment" min="0" max="10">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Attendance (%):</label>
+                        <input type="number" id="attendance" min="0" max="100" step="0.1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Study Hours per Day:</label>
+                        <input type="number" id="studyHours" min="0" max="24" step="0.5">
+                    </div>
+                    
+                    <button onclick="makePrediction()" class="btn-predict">
+                         Predict with AI
+                    </button>
+                </div>
+            </div>
 
-                <div class="progress">
-                    <div class="progress-fill"></div>
+            <div class="card">
+                <h2> AI Prediction Results</h2>
+                <div id="results" class="results-empty">
+                    <p> Enter student data and click predict to see AI-powered results</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ========== SETTINGS ========== -->
-    <section id="settings" class="section">
-        <h1 class="section-title">Settings</h1>
-
-        <div class="settings-wrapper">
-            <button class="logout">Logout</button>
+        <div class="card">
+            <h2>Prediction Statistics</h2>
+            <div id="statistics" class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Total Predictions</div>
+                </div>
+            </div>
         </div>
-    </section>
 
-</div>
+        <footer>
+            <p>BCA Project | Ananya, Gauthami, Gloria Nazareth</p>
+        </footer>
+    </div>
 
-<!-- ================= JAVASCRIPT ================= -->
-<script>
-function showSection(sectionId) {
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-    });
-
-    const target = document.getElementById(sectionId);
-    if (target) {
-        target.classList.add('active');
-    }
-}
-</script>
-
+    <script src="app.js"></script>
 </body>
 </html>
